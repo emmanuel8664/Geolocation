@@ -15,7 +15,7 @@ function displayLocation(position) {
 	var pLocation = document.getElementById("location");
 	pLocation.innerHTML +=  latitude + "," + longitude + "<br>";
 
-<<<<<<< HEAD
+
 /*/
 
 =======
@@ -57,8 +57,7 @@ function displayLocation(position) {
 <<<<<<< HEAD
 	/*/
 
-=======
->>>>>>> e49003abd361b91b204c8db5880b815a000ec250
+
 }
 
 function displayError(error){ 

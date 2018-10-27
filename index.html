@@ -4,6 +4,8 @@
 	<title>Geolocation Introduction</title>
 	<meta charset="utf-8">
 
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZGcBQn2PbPCgcElCr0kfwsJ4S7WIyH8I&libraries=geometry"></script>
+
 	<script src="script.js"></script>
 
 	<style >
@@ -12,7 +14,11 @@
 </head>
 <body>
 
-<h1>My location is ...</h1>
+<h1>How far did I go</h1>
+<form>
+	<button id="track">Start</button>
+</form>
 <p id="location"></p>
+<p id="distance"></p>
 </body>
 </html>

@@ -18,8 +18,8 @@ function displayLocation(position) {
 
 /*/
 
-=======
->>>>>>> e49003abd361b91b204c8db5880b815a000ec250
+
+
 	var pInfo = document.getElementById("info");
 	var date = new Date(position.timestamp);
 	pInfo.innerHTML = "Location timestamp:" + date + "<br>";
@@ -54,7 +54,7 @@ function displayLocation(position) {
 		console.log("Speed is: ", position.coords.speed);
 	}
 
-<<<<<<< HEAD
+
 	/*/
 
 

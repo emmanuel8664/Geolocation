@@ -9,11 +9,18 @@ function displayLocation(position) {
 	pLocation.innerHTML +=  latitude + "," + longitude + "<br>";
 }
 
+function displayError(error){ 
+
+	var errors = ["Unknow error","Permission denied by user", "Position not available", "Timeout error"];
+	var message = errors[error.code];
+	console.warn("Error in getting your location" + message, error.message);
+}
+
 window.onload = function() {
 
 	if (navigator.geolocation){
 		
-		navigator.geolocation.getCurrentPosition(displayLocation);
+		navigator.geolocation.getCurrentPosition(displayLocation, displayError);
 	}
 	else {
 		alert("Sorry, this browser doesn't support geolocation!");

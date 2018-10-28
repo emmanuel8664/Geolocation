@@ -4,15 +4,33 @@
 	<title>Geolocation Introduction</title>
 	<meta charset="utf-8">
 
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZGcBQn2PbPCgcElCr0kfwsJ4S7WIyH8I&libraries=geometry"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZGcBQn2PbPCgcElCr0kfwsJ4S7WIyH8I&libraries=geometry"></script>
 
 	<script src="script.js"></script>
 
 	<style >
-		
+	body { 
+		background-color: #fafafa;
+		font-family: Helvetica, Arial, sans-serif;
+		margin: 20px;
+	 }
+	 div#map {
+	 	width: 600px;
+	 	height: 400px;
+	 }	
+
 	</style>
 </head>
 <body>
+
+
+<h1>My location</h1>
+<p id="location"></p>
+<div id="map">
+	Loading...
+</div>	
+
+<!--	
 
 <p id="info"></p> 
 <p id="time"></p>
@@ -24,6 +42,8 @@
 <form>
 	<button id="track">Start</button>
 </form>
+
+-->
 
 </body>
 </html>

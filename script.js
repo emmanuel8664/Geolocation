@@ -2,11 +2,14 @@ var trackId = null;
 //Store positions
 var locations =[];
 
+var map;
+
 function displayLocation(position) {
 
 	var latitude = position.coords.latitude;
 	var longitude = position.coords.longitude;
 
+	/*/
 	var pTime = document.getElementById("time");
 	t2 = Date.now();
 	pTime.innerHTML += "<br>Computed in " + (t2-t1) + "milliseconds";
@@ -14,16 +17,17 @@ function displayLocation(position) {
 	//Store position in a google object
 	var googleLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 	locations.push(googleLoc);
-	
+	/*/
 
 	var pLocation = document.getElementById("location");
 	pLocation.innerHTML +=  latitude + "," + longitude + "<br>";
 
+	/*/
 	var pInfo = document.getElementById("info");
 	var date = new Date(position.timestamp);
 	pInfo.innerHTML = "Location timestamp:" + date + "<br>";
 	pInfo.innerHTML += "Accuracy of location:" + position.coords.accuracy + "meters<br>";
-
+	/*/
 
 /*/
 
@@ -66,8 +70,35 @@ function displayLocation(position) {
 
 	/*/
 
+	showMap(position.coords);
 
 }
+
+function showMap(coords){
+
+	var googleLatLong = new google.maps.LatLng(coords.latitude,coords.longitude);
+
+	var mapOptions = {
+
+		zoom:11,
+		center: googleLatLong,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
+
+	var mapDiv= document.getElementById("map");
+	map = new google.maps.Map(mapDiv, mapOptions);
+
+	google.maps.event.addListener(map, "click", function(event){
+
+	var latitude = event.latLng.lat();	
+	var longitude = event.latLng.lng();
+
+	var pLocation = document.getElementById("location");
+	pLocation.innerHTML =  latitude + "," + longitude;
+	map.panTo(event.latLng);
+
+	});
+} 
 
 function displayError(error){ 
 
@@ -106,13 +137,17 @@ var t1=0, t2=0;
 
 window.onload = function() {
 
+
+
+	/*/
+
 	var pTime = document.getElementById("time");
 	pTime.innerHTML = "Timeout: 5000, maximunAge: 0"
 
 	t1 = Date.now();
 	navigator.geolocation.getCurrentPosition(displayLocation,displayError,{enableHighAccuracy:true,timeout:5000,maximunAge:0});
 
-
+	/*/
 
 
 /*/
@@ -148,7 +183,7 @@ window.onload = function() {
 /*/
 
 	
-/*/
+
 	if (navigator.geolocation){
 		
 		navigator.geolocation.getCurrentPosition(displayLocation, displayError);
@@ -156,6 +191,6 @@ window.onload = function() {
 	else {
 		alert("Sorry, this browser doesn't support geolocation!");
 	}
-	/*/
+	
 
 }

@@ -7,6 +7,10 @@ function displayLocation(position) {
 	var latitude = position.coords.latitude;
 	var longitude = position.coords.longitude;
 
+	var pTime = document.getElementById("time");
+	t2 = Date.now();
+	pTime.innerHTML += "<br>Computed in " + (t2-t1) + "milliseconds";
+
 	//Store position in a google object
 	var googleLoc = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 	locations.push(googleLoc);
@@ -14,6 +18,11 @@ function displayLocation(position) {
 
 	var pLocation = document.getElementById("location");
 	pLocation.innerHTML +=  latitude + "," + longitude + "<br>";
+
+	var pInfo = document.getElementById("info");
+	var date = new Date(position.timestamp);
+	pInfo.innerHTML = "Location timestamp:" + date + "<br>";
+	pInfo.innerHTML += "Accuracy of location:" + position.coords.accuracy + "meters<br>";
 
 
 /*/
@@ -65,6 +74,9 @@ function displayError(error){
 	var errors = ["Unknow error","Permission denied by user", "Position not available", "Timeout error"];
 	var message = errors[error.code];
 	console.warn("Error in getting your location" + message, error.message);
+
+	var pError =document.getElementById('error');
+	pError.innerHTML = "Error in getting your location: " + message + ", " + error.message;
 }
 
 function trackMe(){
@@ -90,7 +102,20 @@ function computeTotalDistance(){
 	return totalDistance;
 }
 
+var t1=0, t2=0;
+
 window.onload = function() {
+
+	var pTime = document.getElementById("time");
+	pTime.innerHTML = "Timeout: 5000, maximunAge: 0"
+
+	t1 = Date.now();
+	navigator.geolocation.getCurrentPosition(displayLocation,displayError,{enableHighAccuracy:true,timeout:5000,maximunAge:0});
+
+
+
+
+/*/
 
 	//Get elements from the dom
 	var pDistance = document.getElementById("distance");
@@ -119,6 +144,8 @@ window.onload = function() {
 			}
 		}
 	}
+
+/*/
 
 	
 /*/

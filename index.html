@@ -4,7 +4,7 @@
 	<title>Geolocation Introduction</title>
 	<meta charset="utf-8">
 
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZGcBQn2PbPCgcElCr0kfwsJ4S7WIyH8I&libraries=geometry"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZGcBQn2PbPCgcElCr0kfwsJ4S7WIyH8I&libraries=places"></script>
 
 	<script src="script.js"></script>
 
@@ -17,6 +17,9 @@
 	 div#map {
 	 	width: 600px;
 	 	height: 400px;
+	 }
+	 form {
+	 	visibility: hidden;
 	 }	
 
 	</style>
@@ -24,7 +27,12 @@
 <body>
 
 
-<h1>My location</h1>
+<h1>Find nearby places</h1>
+<form id="search">
+	<label for="query">Search for:</label>
+	<input id="query">
+	<button>Search</button>
+</form>
 <p id="location"></p>
 <div id="map">
 	Loading...

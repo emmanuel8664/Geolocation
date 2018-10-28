@@ -8,6 +8,10 @@ var markers = [];
 
 var infoWindow;
 
+var service;
+
+var currentCoords = {};
+
 function displayLocation(position) {
 
 	var latitude = position.coords.latitude;
@@ -82,6 +86,9 @@ function displayLocation(position) {
 
 function showMap(coords){
 
+	currentCoords.latitude = coords.latitude;
+	currentCoords.longitude = coords.longitude;
+
 	var googleLatLong = new google.maps.LatLng(coords.latitude,coords.longitude);
 
 	var mapOptions = {
@@ -93,6 +100,7 @@ function showMap(coords){
 
 	var mapDiv= document.getElementById("map");
 	map = new google.maps.Map(mapDiv, mapOptions);
+	service = new google.maps.places.PlacesService(map);
 	infoWindow = new google.maps.InfoWindow();
 
 	google.maps.event.addListener(map, "click", function(event){
@@ -100,12 +108,40 @@ function showMap(coords){
 	var latitude = event.latLng.lat();	
 	var longitude = event.latLng.lng();
 
+	currentCoords.latitude = latitude;
+	currentCoords.longitude = longitude;
+
 	var pLocation = document.getElementById("location");
 	pLocation.innerHTML =  latitude + "," + longitude;
 	map.panTo(event.latLng);
 	createMarker(event.latLng);
 
 	});
+
+	showForm();
+
+}
+
+function makePlacesRequest(lat, lng) {
+	var query = document.getElementById("query").value;
+	if (query) {
+		var placesRequest = {
+			location: new google.maps.LatLng(lat, lng),
+			radius: 1000,
+			keyword: query
+		};
+		service.nearbySearch(placesRequest, function(results, status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				results.forEach(function(place) {
+					//createMarker(place);
+					console.log(place);
+				});
+			} 
+		});
+
+	} else {
+		console.log("No query entered for places search");
+	}
 } 
 
 function createMarker (latLng) { 
@@ -136,6 +172,21 @@ function displayError(error){
 
 	var pError =document.getElementById('error');
 	pError.innerHTML = "Error in getting your location: " + message + ", " + error.message;
+}
+
+function showForm(){
+	var searchForm = document.getElementById("search");
+	searchForm.style.visibility = "visible";
+
+	var button = document.querySelector("button");
+	button.onclick = function(e){
+		e.preventDefault();
+		//Make a places search request
+		makePlacesRequest(currentCoords.latitude,currentCoords.longitude);
+
+		//Make a places search request
+		console.log("Clicked the search button");
+	}
 }
 
 function trackMe(){

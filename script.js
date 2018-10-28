@@ -4,6 +4,10 @@ var locations =[];
 
 var map;
 
+var markers = [];
+
+var infoWindow;
+
 function displayLocation(position) {
 
 	var latitude = position.coords.latitude;
@@ -72,6 +76,8 @@ function displayLocation(position) {
 
 	showMap(position.coords);
 
+
+
 }
 
 function showMap(coords){
@@ -87,6 +93,7 @@ function showMap(coords){
 
 	var mapDiv= document.getElementById("map");
 	map = new google.maps.Map(mapDiv, mapOptions);
+	infoWindow = new google.maps.InfoWindow();
 
 	google.maps.event.addListener(map, "click", function(event){
 
@@ -96,9 +103,30 @@ function showMap(coords){
 	var pLocation = document.getElementById("location");
 	pLocation.innerHTML =  latitude + "," + longitude;
 	map.panTo(event.latLng);
+	createMarker(event.latLng);
 
 	});
 } 
+
+function createMarker (latLng) { 
+
+	var markerOptions = {
+
+		position:latLng,
+		map:map,
+		clickable:true
+
+	};
+
+	var marker = new google.maps.Marker(markerOptions);
+	markers.push(marker);
+
+	google.maps.event.addListener(marker,"click",function(event){
+		infoWindow.setContent("Location: " + event.latLng.lat().toFixed(2)+ ", "+ event.latLng.lng().toFixed(2));
+		infoWindow.open(map,marker);
+	});
+
+}
 
 function displayError(error){ 
 

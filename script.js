@@ -181,6 +181,11 @@ function displayError(error){
 	pError.innerHTML = "Error in getting your location: " + message + ", " + error.message;
 }
 
+function clearMarkers(){ 
+	markers.forEach(function(marker){marker.setMap(null);});
+	markers = [];
+}
+
 function showForm(){
 	var searchForm = document.getElementById("search");
 	searchForm.style.visibility = "visible";
@@ -188,12 +193,13 @@ function showForm(){
 	var button = document.querySelector("button");
 	button.onclick = function(e){
 		e.preventDefault();
+		clearMarkers();
 		//Make a places search request
 		makePlacesRequest(currentCoords.latitude,currentCoords.longitude);
 
 		//Make a places search request
-		console.log("Clicked the search button");
-	}
+		//console.log("Clicked the search button");
+	};
 }
 
 function trackMe(){
